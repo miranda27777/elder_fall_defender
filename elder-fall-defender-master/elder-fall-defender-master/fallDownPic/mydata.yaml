@@ -1,0 +1,8 @@
+train: D:/StudyFiles/YOlOv8/fallDownPic/dataSet_path/train.txt
+val: D:/StudyFiles/YOLOv8/fallDownPic/dataSet_path/val.txt
+
+# number of classes
+nc: 4
+
+# class names
+names: ["fall","sit","stand","lie"]

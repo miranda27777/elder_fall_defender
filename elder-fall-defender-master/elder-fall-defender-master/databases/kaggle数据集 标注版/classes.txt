@@ -1,0 +1,4 @@
+fall
+sit
+stand
+lie
