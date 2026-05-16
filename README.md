@@ -2,8 +2,8 @@
 
 本项目使用 YOLOv8 深度学习模型实现老人跌倒行为的实时检测，支持**图片检测**、**视频检测**和**摄像头实时检测**三种模式。
 
-- **图片检测 / 摄像头检测**：运行 `src/main.py`
-- **视频文件检测**：运行 `src/video.py`
+- **图片检测**：运行 `src/main.py`
+- **视频文件检测 / 摄像头检测**：运行 `src/video.py`
 
 ---
 
@@ -61,9 +61,9 @@ conda create -n yolo python==3.10.0
 conda activate yolo
 ```
 
-### 2. 安装 PyTorch（GPU 版本）
+### 2. 安装 PyTorch
 
-#### 方式一：使用清华源镜像（推荐，国内快）
+#### 方式一：使用清华源镜像
 
 ```bash
 pip install torch==2.1.0 torchvision==0.16.0 torchaudio==2.1.0 --index-url https://download.pytorch.org/whl/cu121 -i https://pypi.tuna.tsinghua.edu.cn/simple
