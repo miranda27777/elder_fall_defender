@@ -37,7 +37,7 @@ PyQt5==5.15.11
 PyQt5_sip==12.17.0
 PySide6==6.9.1
 PySide6_Addons==6.9.1
-PySide6_Essentials==6.9.1
+PySide6_Essentials==6.10.3
 
 # === Data / Annotation ===
 albumentations==2.0.8
