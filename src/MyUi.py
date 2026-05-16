@@ -1,15 +1,27 @@
 import os
 import sys
-import traceback #打印错误堆栈，调试异常时显示详细信息。
+import ssl
+import traceback
+
+# 禁用 SSL 验证（解决 ultralytics 联网检查的证书问题）
+ssl._create_default_https_context = ssl._create_unverified_context
+
+# 禁止 ultralytics 联网检查更新
+os.environ['ULTRALYTICS_NO_CHECK_UPDATE'] = '1'
+os.environ['YOLO_NO_AUTO_UPDATE'] = '1'
+os.environ['YOLO_VERBOSE'] = 'False'
+
 # 图像处理模块
 import cv2
 import numpy as np
-from PIL import Image #Python Imaging Library，用于图像读取和保存（与 OpenCV 互补）
-import matplotlib.pyplot as plt # 用于绘制图像直方图、可视化图像分析结果。
+from PIL import Image
+import matplotlib.pyplot as plt
+
 # PyQt5
 from PyQt5.QtWidgets import QMainWindow, QApplication, QFileDialog, QMessageBox
 from PyQt5.QtGui import QPixmap, QImage, qRed, qGreen, qBlue
 from PyQt5.QtCore import Qt
+
 # 自定义模块
 from ultralytics import YOLO
 
@@ -75,7 +87,7 @@ def FFT2(img):
     return result
 
 
-#MyWindow类
+# MyWindow类
 class MyWindow(QMainWindow):
     def __init__(self, Ui_MainWindow):
         super().__init__()
@@ -120,45 +132,39 @@ class MyWindow(QMainWindow):
 
 
     def Import(self):
-    # 导入图片
-     self.openfile_name = QFileDialog.getOpenFileName(self, '选择文件', '', "Image Files (*.png *.jpg *.bmp)")[0]
-     if not self.openfile_name:
-        # 如果没有选择文件，直接返回
-        return
+        # 导入图片
+        self.openfile_name = QFileDialog.getOpenFileName(self, '选择文件', '', "Image Files (*.png *.jpg *.bmp)")[0]
+        if not self.openfile_name:
+            return
 
-     try:
-        # Use QPixmap to load the image first
-        self.pixmapBefore = QPixmap(self.openfile_name)
-        if self.pixmapBefore.isNull():
-            raise ValueError("无法加载图片文件")
+        try:
+            self.pixmapBefore = QPixmap(self.openfile_name)
+            if self.pixmapBefore.isNull():
+                raise ValueError("无法加载图片文件")
 
-        self.picpath = self.openfile_name
+            self.picpath = self.openfile_name
+            cv_path = self.convert_path(self.picpath)
+            
+            image = cv2.imdecode(np.fromfile(cv_path, dtype=np.uint8), cv2.IMREAD_COLOR)
+            if image is None:
+                raise ValueError("无法读取图片文件")
 
-        # Convert the path to a format that OpenCV can handle
-        # On Windows, use the native path with backslashes
-        cv_path = self.convert_path(self.picpath)
-        
-        # Read the image using OpenCV with proper encoding handling
-        image = cv2.imdecode(np.fromfile(cv_path, dtype=np.uint8), cv2.IMREAD_COLOR)
-        if image is None:
-            raise ValueError("无法读取图片文件")
+            self.ui.Label_H.setText(str(image.shape[0]))
+            self.ui.Label_W.setText(str(image.shape[1]))
+            self.ui.Label_T.setText(str(image.shape[2]))
+            self.ui.Label_Type.setText(str(image.dtype))
 
-        self.ui.Label_H.setText(str(image.shape[0]))
-        self.ui.Label_W.setText(str(image.shape[1]))
-        self.ui.Label_T.setText(str(image.shape[2]))
-        self.ui.Label_Type.setText(str(image.dtype))
+            self.resizeImage(self.ui.PicBefore, self.pixmapBefore)
 
-        self.resizeImage(self.ui.PicBefore, self.pixmapBefore)
-
-     except Exception as e:
-        traceback.print_exc()
-        QMessageBox.critical(self, "错误", f"加载图片文件时出错: {e}")
+        except Exception as e:
+            traceback.print_exc()
+            QMessageBox.critical(self, "错误", f"加载图片文件时出错: {e}")
 
     def Save(self):
         if self.pixmapAfter.isNull():
             QMessageBox.about(self, '保存失败', '没有已经处理完成的图片')
             return
-        # 保存
+
         SaveName = QFileDialog.getSaveFileName(self, '选择文件', '', "Image Files (*.png *.jpg *.bmp)")[0]
 
         if not SaveName:
@@ -166,10 +172,8 @@ class MyWindow(QMainWindow):
 
         try:
             if type(self.pixmapAfter) == QImage:
-                print("1")
                 result = cv2.imwrite(SaveName, QImage2CV(self.pixmapAfter))
             else:
-                print("2")
                 result = cv2.imwrite(SaveName, QPixmap2cv(self.pixmapAfter))
             if result:
                 QMessageBox.about(self, '保存成功', '保存成功')
@@ -178,14 +182,13 @@ class MyWindow(QMainWindow):
         except Exception as e:
             traceback.print_exc()
 
-
     def resizeImage(self, label, pixmap):
         if pixmap:
             label.setPixmap(pixmap.scaled(label.size(), Qt.KeepAspectRatio, Qt.SmoothTransformation))
 
     def resizeEvent(self, event):
-        self.resizeImage(self.ui.PicBefore,self.pixmapBefore)
-        self.resizeImage(self.ui.PicAfter,self.pixmapAfter)
+        self.resizeImage(self.ui.PicBefore, self.pixmapBefore)
+        self.resizeImage(self.ui.PicAfter, self.pixmapAfter)
         super(MyWindow, self).resizeEvent(event)
 
     def check(self):
@@ -202,17 +205,17 @@ class MyWindow(QMainWindow):
         if self.check():
             return
         img = cv2.imread(self.picpath)
-        grayImg = cv2.cvtColor(img,cv2.COLOR_RGB2GRAY)
+        grayImg = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
         qt_img = cvImgtoQtImg(grayImg)
         self.pixmapAfter = QPixmap.fromImage(qt_img)
-        self.resizeImage(self.ui.PicAfter,self.pixmapAfter)
+        self.resizeImage(self.ui.PicAfter, self.pixmapAfter)
 
     def Binarization(self):
         if self.check():
             return
         try:
             img = cv2.imread(self.picpath)
-            grayImg = cv2.cvtColor(img,cv2.COLOR_RGB2GRAY)
+            grayImg = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
             qt_img = cvImgtoQtImg(cv2.threshold(grayImg, 127, 255, cv2.THRESH_BINARY)[1])
             self.pixmapAfter = QPixmap.fromImage(qt_img)
             self.resizeImage(self.ui.PicAfter, self.pixmapAfter)
@@ -413,7 +416,6 @@ class MyWindow(QMainWindow):
         self.pixmapAfter = QPixmap.fromImage(qt_img)
         self.resizeImage(self.ui.PicAfter, self.pixmapAfter)
 
-
     def Canny(self):
         if self.check():
             return
@@ -425,48 +427,56 @@ class MyWindow(QMainWindow):
         self.resizeImage(self.ui.PicAfter, self.pixmapAfter)
 
     def DeepLearningProcess(self):
-     try:
-        # 获取当前脚本所在目录
-        base_dir = os.path.dirname(__file__)
+        try:
+            # 获取当前脚本所在目录（src/）
+            base_dir = os.path.dirname(__file__)
 
-        # 拼接相对路径
-        model_path = os.path.join(base_dir, "model", "best.pt")
-
-        # 加载模型
-        model = YOLO(model_path)
-        results = model(self.picpath)
-        
-        # 获取类别名称（通过model.names而不是results.names）
-        class_names = model.names
-        
-        # 加载原始图像
-        img = cv2.imread(self.picpath)
-        
-        # 绘制检测结果
-        for box in results[0].boxes:
-            x1, y1, x2, y2 = map(int, box.xyxy[0])
-            conf = box.conf.item()
-            cls_id = int(box.cls.item())
-            label = f"{class_names[cls_id]} {conf:.2f}"
+            # 向上回到项目根目录，然后找 model/best.pt
+            model_path = os.path.join(base_dir, "..", "model", "best.pt")
+            model_path = os.path.normpath(model_path)
             
-            cv2.rectangle(img, (x1, y1), (x2, y2), (0, 255, 0), 2)
-            cv2.putText(img, label, (x1, y1-10),
-                      cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
+            # 检查模型文件是否存在
+            if not os.path.exists(model_path):
+                QMessageBox.critical(self, "错误", f"模型文件不存在:\n{model_path}\n\n请确保 model/best.pt 文件存在")
+                return
+
+            # 加载模型（禁用详细输出）
+            model = YOLO(model_path, verbose=False)
+            
+            # 执行推理
+            results = model(self.picpath, verbose=False)
+            
+            # 获取类别名称
+            class_names = model.names
+            
+            # 加载原始图像
+            img = cv2.imread(self.picpath)
+            
+            # 绘制检测结果
+            cls_id = 0
+            conf = 0
+            for box in results[0].boxes:
+                x1, y1, x2, y2 = map(int, box.xyxy[0])
+                conf = box.conf.item()
+                cls_id = int(box.cls.item())
+                label = f"{class_names[cls_id]} {conf:.2f}"
+                
+                cv2.rectangle(img, (x1, y1), (x2, y2), (0, 255, 0), 2)
+                cv2.putText(img, label, (x1, y1-10),
+                          cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
+            
+            # 显示结果
+            qt_img = cvImgtoQtImg(img)
+            self.pixmapAfter = QPixmap.fromImage(qt_img)
+            self.resizeImage(self.ui.PicAfter, self.pixmapAfter)
+            
+            QMessageBox.information(self, "检测结果",
+                                  f"检测到: {class_names[cls_id]}\n置信度: {conf:.2f}")
         
-        # 显示结果
-        qt_img = cvImgtoQtImg(img)
-        self.pixmapAfter = QPixmap.fromImage(qt_img)
-        self.resizeImage(self.ui.PicAfter, self.pixmapAfter)
-        
-        QMessageBox.information(self, "检测结果",
-                              f"检测到: {class_names[cls_id]}\n置信度: {conf:.2f}")
-    
-     except Exception as e:
-        QMessageBox.critical(self, "错误", f"处理失败: {str(e)}")
-        traceback.print_exc()
+        except Exception as e:
+            error_msg = str(e)
+            QMessageBox.critical(self, "错误", f"处理失败:\n{error_msg}")
+            traceback.print_exc()
 
-
-
-
-    def convert_path(self,path):
+    def convert_path(self, path):
         return path.replace("/", "\\")

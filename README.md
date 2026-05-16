@@ -1,3 +1,6 @@
+以下是修改后的 README.md，PyTorch 安装部分添加了清华源镜像：
+
+```markdown
 # 基于 YOLOv8 的老人跌倒检测系统
 
 本项目使用 YOLOv8 深度学习模型实现老人跌倒行为的实时检测，支持**图片检测**、**视频检测**和**摄像头实时检测**三种模式。
@@ -84,16 +87,22 @@ conda activate yolo
 
 ### 2. 安装 PyTorch（GPU 版本）
 
-以 CUDA 12.1 为例：
+#### 方式一：使用清华源镜像（推荐，国内快）
+
+```bash
+pip install torch==2.1.0 torchvision==0.16.0 torchaudio==2.1.0 --index-url https://download.pytorch.org/whl/cu121 -i https://pypi.tuna.tsinghua.edu.cn/simple
+```
+
+#### 方式二：使用 Conda 安装
 
 ```bash
 conda install pytorch==2.1.0 torchvision==0.16.0 torchaudio==2.1.0 pytorch-cuda=12.1 -c pytorch -c nvidia
 ```
 
-如果没有 NVIDIA GPU，安装 CPU 版本：
+#### 如果没有 NVIDIA GPU，安装 CPU 版本
 
 ```bash
-pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
+pip install torch==2.1.0 torchvision==0.16.0 torchaudio==2.1.0 --index-url https://download.pytorch.org/whl/cpu -i https://pypi.tuna.tsinghua.edu.cn/simple
 ```
 
 ### 3. 安装其他依赖
@@ -194,9 +203,22 @@ pip install ultralytics
 
 **Q：摄像头无法打开**
 
-检查摄像头权限，或修改代码中的摄像头索引：`cv2.VideoCapture(0)` → `cv2.VideoCapture(1)`
+检查摄像头权限：
+1. Windows 设置 → 隐私和安全性 → 相机
+2. 确保"允许应用访问你的相机"已开启
+3. 确保 Python 在允许列表中
+
+如果仍无法打开，请先用视频文件模式测试检测功能。
 
 **Q：模型加载失败**
 
 确保 `model/best.pt` 文件存在，或重新训练模型。
+
+**Q：PyTorch 下载太慢**
+
+使用清华源镜像：
+```bash
+pip install torch==2.1.0 torchvision==0.16.0 --index-url https://download.pytorch.org/whl/cu121 -i https://pypi.tuna.tsinghua.edu.cn/simple
+```
+```
 
