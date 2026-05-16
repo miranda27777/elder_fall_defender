@@ -1,0 +1,38 @@
+D:/StudyFiles/YOLOv8/fallDownPic/images\fall011.jpg
+D:/StudyFiles/YOLOv8/fallDownPic/images\fall012.jpg
+D:/StudyFiles/YOLOv8/fallDownPic/images\fall028.jpg
+D:/StudyFiles/YOLOv8/fallDownPic/images\fall035.jpg
+D:/StudyFiles/YOLOv8/fallDownPic/images\fall038.jpg
+D:/StudyFiles/YOLOv8/fallDownPic/images\fall040.jpg
+D:/StudyFiles/YOLOv8/fallDownPic/images\fall059.jpg
+D:/StudyFiles/YOLOv8/fallDownPic/images\fall060.jpg
+D:/StudyFiles/YOLOv8/fallDownPic/images\fall067.jpg
+D:/StudyFiles/YOLOv8/fallDownPic/images\fall068.jpg
+D:/StudyFiles/YOLOv8/fallDownPic/images\fall082.jpg
+D:/StudyFiles/YOLOv8/fallDownPic/images\fall098.jpg
+D:/StudyFiles/YOLOv8/fallDownPic/images\fall123.jpg
+D:/StudyFiles/YOLOv8/fallDownPic/images\fall133.jpg
+D:/StudyFiles/YOLOv8/fallDownPic/images\fall134.jpg
+D:/StudyFiles/YOLOv8/fallDownPic/images\fall140.jpg
+D:/StudyFiles/YOLOv8/fallDownPic/images\fall154.jpg
+D:/StudyFiles/YOLOv8/fallDownPic/images\fall180.jpg
+D:/StudyFiles/YOLOv8/fallDownPic/images\fall199.jpg
+D:/StudyFiles/YOLOv8/fallDownPic/images\not fallen004.jpg
+D:/StudyFiles/YOLOv8/fallDownPic/images\not fallen005.jpg
+D:/StudyFiles/YOLOv8/fallDownPic/images\not fallen009.jpg
+D:/StudyFiles/YOLOv8/fallDownPic/images\not fallen022.jpg
+D:/StudyFiles/YOLOv8/fallDownPic/images\not fallen036.jpg
+D:/StudyFiles/YOLOv8/fallDownPic/images\not fallen047.jpg
+D:/StudyFiles/YOLOv8/fallDownPic/images\not fallen058.jpg
+D:/StudyFiles/YOLOv8/fallDownPic/images\not fallen066.jpg
+D:/StudyFiles/YOLOv8/fallDownPic/images\not fallen068.jpg
+D:/StudyFiles/YOLOv8/fallDownPic/images\not fallen071.jpg
+D:/StudyFiles/YOLOv8/fallDownPic/images\not fallen075.jpg
+D:/StudyFiles/YOLOv8/fallDownPic/images\not fallen080.jpg
+D:/StudyFiles/YOLOv8/fallDownPic/images\not fallen095.jpg
+D:/StudyFiles/YOLOv8/fallDownPic/images\not fallen096.jpg
+D:/StudyFiles/YOLOv8/fallDownPic/images\not fallen119.jpg
+D:/StudyFiles/YOLOv8/fallDownPic/images\not fallen131.jpg
+D:/StudyFiles/YOLOv8/fallDownPic/images\not fallen139.jpg
+D:/StudyFiles/YOLOv8/fallDownPic/images\not fallen146.jpg
+D:/StudyFiles/YOLOv8/fallDownPic/images\not fallen153.jpg
