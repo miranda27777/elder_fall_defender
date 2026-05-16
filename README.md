@@ -12,35 +12,16 @@
 ```text
 elder_fall_defender/
 │
-├── README.md                    # 项目说明文档
+├── README.md                    # 项目介绍、部署说明、模型训练过程及结果介绍
 ├── requirements.txt             # Python 依赖列表
-├── .gitignore                   # Git 忽略配置
-│
-├── .github/                     # GitHub Actions 配置
-│
-├── src/                         # 核心源代码
-│   ├── main.py                  # 图片/摄像头检测主程序
-│   ├── video.py                 # 视频检测主程序
-│   ├── MainWindow.py            # 主窗口 UI 逻辑
-│   └── MyUi.py                  # 子窗口 UI 组件
-│
+├── src/                         # 驱动程序源代码
 ├── train/                       # 模型训练脚本
 │   ├── train.py                 # YOLOv8 训练脚本
 │   ├── split.py                 # 数据集划分脚本
 │   ├── split_train_val.py       # 训练/验证集划分
-│   ├── test.py                  # 测试脚本
-│   ├── train2.py                # 备用训练脚本
-│   └── validate.py              # 验证脚本
-│
 ├── tests/                       # 单元测试
-│   ├── test_cli.py
-│   ├── test_engine.py
-│   ├── test_python.py
-│   └── fallDownTest/            # 测试图片样本
-│
 ├── runs/                        # 训练输出
 │   ├── train/fallDetect1/       # 模型训练结果
-│   │   ├── weights/             # 模型权重（空）
 │   │   ├── *.png                # 训练曲线图
 │   │   ├── *.jpg                # 训练过程可视化
 │   │   └── args.yaml            # 训练参数配置
@@ -55,10 +36,8 @@ elder_fall_defender/
 │       ├── dataSet_path/        # 路径配置文件
 │       └── mydata.yaml          # 数据集配置文件
 │
-├── model/                       # 模型权重存储位置
-│   └── best.pt                  # 最佳模型权重
-│
-└── requirements.txt             # Python 依赖列表
+├── model/                       # 模型存储位置
+│   └── best.pt                  # 最佳模型
 ```
 
 ---
