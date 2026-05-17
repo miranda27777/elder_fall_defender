@@ -29,7 +29,7 @@ elder_fall_defender/
 │
 ├── data/                        # 数据集
 │   └── fallDownPic/
-│       ├── images/              # 训练图片（200+ 张）
+│       ├── images/              # 训练图片
 │       ├── labels/              # YOLO 格式标注文件
 │       ├── Annotation/          # 原始标注文件
 │       ├── ImageSets/           # 数据集划分文件
@@ -99,8 +99,8 @@ python -c "import torch; print(f'PyTorch: {torch.__version__}'); print(f'CUDA可
 
 ### 数据集
 
-- **来源**：自建跌倒检测数据集
-- **类别**：2 类（`fall` / `not_fallen`）
+- **来源**：Kaggle
+- **类别**：4 类（`fall` / `sit` / `stand` / `lie`）
 - **图片数量**：跌倒约 208 张，未跌倒约 166 张
 - **标注格式**：YOLO 格式
 - **数据划分**：训练集 / 验证集 = 8:2
