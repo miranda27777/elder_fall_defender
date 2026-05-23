@@ -20,7 +20,7 @@ ultralytics>=8.0.0
 matplotlib==3.8.4
 seaborn==0.13.2
 pandas==2.3.0
-ipython==8.25.0
+ipython==9.13.0
 
 # === 配置文件与工具 ===
 PyYAML==6.0.2
