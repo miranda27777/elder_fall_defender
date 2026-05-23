@@ -26,7 +26,7 @@ ipython==8.25.0
 PyYAML==6.0.2
 tqdm==4.66.4
 psutil==5.9.0
-requests==2.31.0
+requests==2.34.2
 
 # === 数据增强（训练用）===
 albumentations==2.0.8
