@@ -6,7 +6,7 @@
 # === 基础图像处理 ===
 numpy==1.23.5
 opencv-python>=4.5.0
-Pillow==11.2.1
+Pillow==12.2.0
 
 # === GUI ===
 PyQt5==5.15.11
